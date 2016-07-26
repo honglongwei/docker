@@ -47,6 +47,9 @@
 
   #### Docker VS VM虚拟机: 优势那就是轻量和高性能和便捷性
   
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/2.jpg) 
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/3.jpg)
+  
   * 快 <br>
 　　运行时的性能可以获取极大提升(经典的案例是提升97%) <br>
 　　管理操作(启动，停止，开始，重启等等) 都是以秒或毫秒为单位的。 <br>

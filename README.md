@@ -142,3 +142,7 @@
          yum -y install docker-io
     
   * 使用
+    1. 主配置文件
+       ![Image](https://github.com/honglongwei/docker/blob/master/images/1.jpg)
+    2. 
+    2. 

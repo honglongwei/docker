@@ -126,18 +126,19 @@
 
 
 ### docker的安装与使用
-  * 安装
-    1. centos
-       a. 配置epel源
+  * 安装  <br>
+    1. centos <br>
+       a. 配置epel源 <br>
           yum install -y yum-priorities && rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
 
-       b. 安装 docker-io febootstrap(febootstrap用来制作centos镜像的工具)
-          yum install docker-io febootstrap -y
+       b. 安装 docker-io febootstrap(febootstrap用来制作centos镜像的工具) <br>
+          yum install docker-io febootstrap -y   <br>
           
-    2. redhat
-       a. 配置epel源
+    2. redhat  <br>
+       a. 配置epel源  <br>
           rpm -ivh http://dl.Fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
-       b.修改epel.repo源把https改成http,安装 docker-io
+          
+       b.修改epel.repo源把https改成http,安装 docker-io <br>
          yum -y install docker-io
     
   * 使用

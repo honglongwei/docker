@@ -159,20 +159,20 @@
     3. 命令介绍 <br>
     （先有镜像，再用镜像启动一个个容器）<br>
      
-     * docker search +镜像名 //搜索镜像<br>
+     * #### docker search +镜像名 //搜索镜像<br>
        -s 40 列出收藏数不小于40的镜像 <br>
        
-     * docker info  //显示 Docker 系统信息，包括镜像和容器数。<br>
+     * #### docker info  //显示 Docker 系统信息，包括镜像和容器数。<br>
      
-     * docker pull +镜像名 //下载镜像 <br>
+     * #### docker pull +镜像名 //下载镜像 <br>
      
-     * docker images //列出本地所有镜像。 <br>
+     * #### docker images //列出本地所有镜像。 <br>
        -a 列出所有镜像（含过程镜像） <br> 
        -f 过滤镜像 <br> 
        -q 仅列出镜像ID <br> 
        --tree 以树状结构列出镜像的所有提交历史 <br>
        
-     * docker run //启动一个容器 <br>
+     * #### docker run //启动一个容器 <br>
        -d 后台运行容器，并返回容器ID<br>
        -i 以交互模式运行容器，通常与 -t 同时使用<br>
        -t 为容器重新分配一个伪输入终端，通常与 -i 同时使用<br>
@@ -186,38 +186,38 @@
        --link 将两个容器关联起来，如：--link [容器名]:[镜像名] <br>
        -v 设置容器文件映射,如：-v "$PWD":/cookbook:ro ([宿主目录]:[容器对应目录]:[权限:ro表示 read-only]) <br>
        
-     * docker ps //列出所有运行中容器 <br>
+     * #### docker ps //列出所有运行中容器 <br>
        -a 列出所有容器（含沉睡镜像） <br>
        -l 仅列出最新创建的一个容器 <br>
        -n=4 列出最近创建的4个容器 <br>
        -q 仅列出容器ID <br>
        -s 显示容器大小 <br>
       
-    * docker attach vs docker exec //tty进入容器 <br>
+     * #### docker attach vs docker exec //tty进入容器 <br>
        docker attach可以attach到一个已经运行的容器的stdin，然后进行命令执行的动作。 
        但是需要注意的是，如果从这个stdin中exit，会导致容器的停止。<br>
        [root@docker_004 ~]# docker exec -it test /bin/sh  <br>
     
-    * docker start|stop|restart  //启动、停止和重启一个或多个指定容器  <br>
+     * #### docker start|stop|restart  //启动、停止和重启一个或多个指定容器  <br>
       -a 待完成<br>
       -i 启动一个容器并进入交互模式<br>
-      t 10 停止或者重启容器的超时时间（秒），超时后系统将杀死进程<br>
+      -t 10 停止或者重启容器的超时时间（秒），超时后系统将杀死进程<br>
     
-    * docker kill  //杀死一个或多个指定容器进程
+     * #### docker kill  //杀死一个或多个指定容器进程
     
-    * docker inspect //检查镜像或者容器的参数，默认返回 JSON 格式<br>
+     * #### docker inspect //检查镜像或者容器的参数，默认返回 JSON 格式<br>
       -f 指定返回值的模板文件<br>
       
-    * docker logs //获取容器运行时的输出日志 <br>
+     * #### docker logs //获取容器运行时的输出日志 <br>
       -f 跟踪容器日志的最近更新 <br>
       -t 显示容器日志的时间戳 <br>
       --tail="10" 仅列出最新10条容器日志<br>
     
-    * docker rm  //从本地移除一个或多个指定的镜像<br>
+     * #### docker rm  //从本地移除一个或多个指定的镜像<br>
        -f 强行移除该容器，即使其正在运行<br>
        -l 移除容器间的网络连接，而非容器本身<br>
        -v 移除与容器关联的空间<br>
        
-    * docker rmi //从本地移除一个或多个指定的镜像 <br>
+     * #### docker rmi //从本地移除一个或多个指定的镜像 <br>
       -f 强行移除该镜像，即使其正被使用 <br>
       --no-prune 不移除该镜像的过程镜像，默认移除<br>

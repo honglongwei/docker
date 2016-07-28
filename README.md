@@ -148,8 +148,42 @@
     
   * 使用
     1. 主配置文件 <br>
-       ![Image](https://github.com/honglongwei/docker/blob/master/images/1.jpg)
+       ![Image](https://github.com/honglongwei/docker/blob/master/images/1.jpg)  <br>
 
-    2. 
+    2. 启动 <br>
+       [root@docker_004 ~]# /etc/init.d/docker start   <br>
+       Starting docker:                                           [  OK  ]   <br>
+       [root@docker_004 ~]# ps -ef |grep docker              <br>
+       root      2502     1  5 09:59 pts/1    00:00:00 /usr/bin/docker -d    <br>
+       
+    3. 简单使用 <br>
+    （先有镜像，再用镜像启动一个个容器）<br>
+     
+     * docker search +镜像名 //搜索镜像<br>
+       -s 40 列出收藏数不小于40的镜像 <br>
+       
+     * docker info  //显示 Docker 系统信息，包括镜像和容器数。<br>
+     
+     * docker pull +镜像名 //下载镜像 <br>
+     
+     * docker images //列出本地所有镜像。 <br>
+       -a 列出所有镜像（含过程镜像） <br> 
+       -f 过滤镜像 <br> 
+       -q 仅列出镜像ID <br> 
+       --tree 以树状结构列出镜像的所有提交历史 <br>
+       
+     * docker run //启动一个容器 <br>
+       -d 后台运行容器，并返回容器ID<br>
+       -i 以交互模式运行容器，通常与 -t 同时使用<br>
+       -t 为容器重新分配一个伪输入终端，通常与 -i 同时使用<br>
+       --dns 8.8.8.8 指定容器使用的DNS服务器，默认和宿主一致<br>
+       --dns-search example.com 指定容器DNS搜索域名，默认和宿主一致<br>
+       -h "mars" 指定容器的hostname<br>
+       --name 设置容器的名称，在对容器操作的时候就可以使用名称，如：--name mysqlwp <br>
+       -e 设置容器的环境变量，如：-e MYSQL_ROOT_PASSWORD=wordpressdocker <br>
+       -p 设置容器和host的端口映射，如：-p 80：80 <br>
+       -P 大P暴露容器所有端口映射 <br>
+       --link 将两个容器关联起来，如：--link [容器名]:[镜像名] <br>
+       -v 设置容器文件映射,如：-v "$PWD":/cookbook:ro ([宿主目录]:[容器对应目录]:[权限:ro表示 read-only]) <br>
+     
     
-    3. 

@@ -238,7 +238,7 @@
     # 下载registry<br>
     docker pull registry<br>
     
-    # 启动仓库容器
+    # 启动仓库容器<br>
     docker run -d -p 5000:5000 -v /data/registry:/tmp/registry registry<br>
 
     # 可以拉取一个比较小的images做测试<br>

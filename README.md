@@ -236,25 +236,25 @@
 
 * 启动私有仓库容器, 并映射本地目录<br>
     # 下载registry<br>
-      docker pull registry<br>
+     docker pull registry<br>
     
     # 启动仓库容器<br>
-      docker run -d -p 5000:5000 -v /data/registry:/tmp/registry registry<br>
+     docker run -d -p 5000:5000 -v /data/registry:/tmp/registry registry<br>
 
     # 可以拉取一个比较小的images做测试<br>
-      docker pull centos<br>
+     docker pull centos<br>
 
     # 更改images的tag<br>
-      sudo docker tag centos 10.0.0.1:5000/centos<br>
+     sudo docker tag centos 10.0.0.1:5000/centos<br>
 
     # Push images<br>
-      sudo docker push 10.0.0.1:5000/centos<br>
+     sudo docker push 10.0.0.1:5000/centos<br>
 
     # Pull images<br>
-      sudo docker pull 10.0.0.1:5000/centos<br>
+     sudo docker pull 10.0.0.1:5000/centos<br>
 
     # 通过API查看<br>
-      curl http://10.0.0.1:5000/v1/search<br>
+     curl http://10.0.0.1:5000/v1/search<br>
 
     # 在私有仓库搜索<br>
-      docker search 10.0.0.1:5000/centos<br>
+     docker search 10.0.0.1:5000/centos<br>

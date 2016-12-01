@@ -222,39 +222,39 @@
       -f 强行移除该镜像，即使其正被使用 <br>
       --no-prune 不移除该镜像的过程镜像，默认移除<br>
 
-::::基于CentOS 6.5
+### 基于CentOS 6.5创建私有仓库<br>
 
-* 修改Docker参数
-    /etc/sysconfig/docker:
-    other_args="--insecure-registry 10.0.0.1:5000"
+* 修改Docker参数<br>
+    vim /etc/sysconfig/docker:<br>
+    other_args="--insecure-registry 10.0.0.1:5000" <br>
 
-    启动服务:
-    service docker start
+    启动服务:<br>
+    service docker start<br>
 
-* 创建存放images的目录
-    mkdir -pv /data/registry
+* 创建存放images的目录<br>
+    mkdir -pv /data/registry<br>
 
-* 启动私有仓库容器, 并映射本地目录
-    # 下载registry
-    docker pull registry
+* 启动私有仓库容器, 并映射本地目录<br>
+    # 下载registry<br>
+    docker pull registry<br>
     
     # 启动仓库容器
-    docker run -d -p 5000:5000 -v /data/registry:/tmp/registry registry
+    docker run -d -p 5000:5000 -v /data/registry:/tmp/registry registry<br>
 
-    # 可以拉取一个比较小的images做测试
-    docker pull centos
+    # 可以拉取一个比较小的images做测试<br>
+    docker pull centos<br>
 
-    # 更改images的tag
-    sudo docker tag centos 10.0.0.1:5000/centos
+    # 更改images的tag<br>
+    sudo docker tag centos 10.0.0.1:5000/centos<br>
 
-    # Push images
-    sudo docker push 10.0.0.1:5000/centos
+    # Push images<br>
+    sudo docker push 10.0.0.1:5000/centos<br>
 
-    # Pull images
-    sudo docker pull 10.0.0.1:5000/centos
+    # Pull images<br>
+    sudo docker pull 10.0.0.1:5000/centos<br>
 
-    # 通过API查看
-    curl http://10.0.0.1:5000/v1/search
+    # 通过API查看<br>
+    curl http://10.0.0.1:5000/v1/search<br>
 
-    # 在私有仓库搜索
-    docker search 10.0.0.1:5000/centos
+    # 在私有仓库搜索<br>
+    docker search 10.0.0.1:5000/centos<br>

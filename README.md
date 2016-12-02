@@ -259,9 +259,10 @@
     # 在私有仓库搜索<br>
      docker search 10.0.0.1:5000/centos<br>
      
-  
-###  创建一个系统容器并远程连接<br>
-* 下载系统镜像<br>
+     
+###  创建一个系统容器并远程连接
+
+* 下载系统镜像 <br>
   docker pull rastasheep/ubuntu-sshd <br>
       
 * 启动容器<br>

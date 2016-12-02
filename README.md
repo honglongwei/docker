@@ -263,19 +263,19 @@
 ###  创建一个系统容器并远程连接
 
 * 下载系统镜像 <br>
-  docker pull rastasheep/ubuntu-sshd <br>
+  docker pull rastasheep/ubuntu-sshd 
       
 * 启动容器<br>
   docker run -itd -p 16888:22 -h docker_test --name="docker_001" rastasheep/ubuntu-sshd /bin/bash<br>
-  // -p 映射对应端口 -P 映射所有端口 -h 指定hostname  --name 给容器指定一个别名<br>
+  // -p 映射对应端口 -P 映射所有端口 -h 指定hostname  --name 给容器指定一个别名
 
 * 进行容器<br>
   docker exec -it docker_001 /bin/bash<br> 
   // 若用docker attach docker_001进入容器exit退出容器则容器停止<br> 
-  /etc/init.d/ssh start<br> 
- 
-* 远程连接<br> 
-  ssh -p 16888 root@10.0.0.1<br> 
+  /etc/init.d/ssh start
+  
+* 远程连接<br> 
+  ssh -p 16888 root@10.0.0.1
  
 * 对容器做了修改保存提前镜像<br> 
   // 容器做了一定的修改，以后想继续使用可以保存镜像并提交到自己的私有仓库<br> 

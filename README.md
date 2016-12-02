@@ -283,9 +283,9 @@
   docker stop docker_001<br> 
   docker commit docker_001 docker_v1 //保存修改
   
-* 打包镜像
+* 打包镜像<br>
   docker save docker_v1 >/home/docker_v1.tar
 
-* 在另外的机器上导入镜像
+* 在另外的机器上导入镜像<br>
   docker load < /opt/docker_v1.tar //导入镜像 <br>
   dokcer images // 查看存在的镜像

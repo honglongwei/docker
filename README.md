@@ -222,19 +222,19 @@
       -f 强行移除该镜像，即使其正被使用 <br>
       --no-prune 不移除该镜像的过程镜像，默认移除<br>
 
-### 基于CentOS 6.5创建私有仓库<br>
+### 基于CentOS 6.5创建私有仓库
 
 * 修改Docker参数<br>
     vim /etc/sysconfig/docker:<br>
     other_args="--insecure-registry 10.0.0.1:5000" <br>
 
     启动服务:<br>
-    service docker start<br>
+    service docker start
 
-* 创建存放images的目录<br>
-    mkdir -pv /data/registry<br>
+* 创建存放images的目录
+    mkdir -pv /data/registry
 
-* 启动私有仓库容器, 并映射本地目录<br>
+* 启动私有仓库容器, 并映射本地目录
     # 下载registry<br>
      docker pull registry<br>
     

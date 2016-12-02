@@ -281,4 +281,11 @@
   //容器做了一定的修改，以后想继续使用可以保存镜像并提交到自己的私有仓库<br> 
   docker ps // 不加参数列出正在运行的所有容器，-l显示最后一次创建的容器, -a显示所有容器包括非运行的<br> 
   docker stop docker_001<br> 
-  docker commit docker_001 docker_v1 //保存修改<br> 
+  docker commit docker_001 docker_v1 //保存修改
+  
+* 打包镜像
+  docker save docker_v1 >/home/docker_v1.tar
+
+* 在另外的机器上导入镜像
+  docker load < /opt/docker_v1.tar //导入镜像 <br>
+  dokcer images // 查看存在的镜像

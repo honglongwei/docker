@@ -289,3 +289,28 @@
 * 在另外的机器上导入镜像<br>
   docker load < /opt/docker_v1.tar //导入镜像 <br>
   dokcer images // 查看存在的镜像
+
+
+###  创建简单的web容器
+  (以部署nginx容器为例)
+* 查找Docker Hub上的nginx镜像
+  docker search nginx
+
+* 拉取官方的镜像
+  docker pull nginx
+
+* 使用镜像运行容器
+  docker run -p 80:80 --name mynginx -v $PWD/www:/www -v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf -v $PWD/logs:/wwwlogs  -d nginx <br>
+  命令说明：<br>
+   -p 80:80：将容器的80端口映射到主机的80端口<br>
+   --name mynginx：将容器命名为mynginx<br>
+   -v $PWD/www:/www：将主机中当前目录下的www挂载到容器的/www<br>
+   -v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf：将主机中当前目录下的nginx.conf挂载到容器的/etc/nginx/nginx.conf<br>
+   -v $PWD/logs:/wwwlogs：将主机中当前目录下的logs挂载到容器的/wwwlogs
+
+* 查看容器启动情况,通过浏览器访问
+  docker ps<br>
+  curl 'http://10.0.0.1:80'
+
+
+###  Dockerfile介绍及使用

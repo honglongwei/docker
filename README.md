@@ -308,9 +308,92 @@
    -v $PWD/conf/nginx.conf:/etc/nginx/nginx.conf：将主机中当前目录下的nginx.conf挂载到容器的/etc/nginx/nginx.conf<br>
    -v $PWD/logs:/wwwlogs：将主机中当前目录下的logs挂载到容器的/wwwlogs
 
-* 查看容器启动情况,通过浏览器访问
+* 查看容器启动情况,并通过浏览器或者curl访问<br>
   docker ps<br>
   curl 'http://10.0.0.1:80'
 
 
 ###  Dockerfile介绍及使用
+* 介绍
+  Dockerfile是由一系列命令和参数构成的脚本，这些命令应用于基础镜像并最终创建一个新的镜像。它们简化了从头到尾的流程并极大的简化了部署工作。Dockerfile从FROM命令开始，紧接着跟随者各种方法，命令和参数。其产出为一个新的可以用于创建容器的镜像。
+
+* 语法
+  Dockerfile语法由两部分构成，注释和命令+参数
+```python
+  # Print "Hello docker!"
+  RUN echo "Hello docker!"
+```
+
+* 关键字
+  FROM              基于哪个镜像 <br>
+  RUN               安装软件/运行命令用<br>
+  MAINTAINER        镜像创建者<br>
+  CMD               Container启动时执行的命令，但是一个Dockerfile中只能有一条CMD命令，多条则只执行最后一条CMD<br>
+  ENTRYPOINT        container启动时执行的命令，但是一个Dockerfile中只能有一条ENTRYPOINT命令，如果多条，则只执行最后一条<br>
+  USER              使用哪个用户跑container<br>
+  EXPOSE            container内部服务开启的端口。主机上要用还得在启动container时，做host-container的端口映射<br>
+  ENV               用来设置环境变量  // ENV LANG en_US.UTF-8<br>
+  ADD               将文件<src>拷贝到container的文件系统对应的路径<dest>,所有拷贝到container中的文件和文件夹权限为0755,uid和gid为0,只有在build镜像的时候运行一次，后面运行container的时候不会再重新加载了 <br>
+  VOLUME            可以将本地文件夹或者其他container的文件夹挂载到container中><br>
+  WORKDIR           切换目录用，可以多次切换(相当于cd命令)，对RUN,CMD,ENTRYPOINT生效<br>
+  ONBUILD           ONBUILD 指定的命令在构建镜像时并不执行，而是在它的子镜像中执行
+
+* 使用(通过Dockerfile构建nginx容器)
+  
+```python
+  创建Dockerfile
+  首先，创建目录nginx,用于存放后面的相关东西
+  $mkdir -p ~/nginx/www ~/nginx/logs ~/nginx/conf
+
+  www目录将映射为nginx容器配置的虚拟目录
+  logs目录将映射为nginx容器的日志目录
+  conf目录里的配置文件将映射为nginx容器的配置文件
+  进入创建的nginx目录，创建Dockerfile
+ 
+  $vim Dockerfile
+
+FROM debian:jessie
+
+MAINTAINER NGINX Docker Maintainers "docker-maint@nginx.com"
+
+ENV NGINX_VERSION 1.10.1-1~jessie
+
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62 \
+        && echo "deb http://nginx.org/packages/debian/ jessie nginx" >> /etc/apt/sources.list \
+        && apt-get update \
+        && apt-get install --no-install-recommends --no-install-suggests -y \
+                                                ca-certificates \
+                                                nginx=${NGINX_VERSION} \
+                                                nginx-module-xslt \
+                                                nginx-module-geoip \
+                                                nginx-module-image-filter \
+                                                nginx-module-perl \
+                                                nginx-module-njs \
+                                                gettext-base \
+        && rm -rf /var/lib/apt/lists/*
+
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+        && ln -sf /dev/stderr /var/log/nginx/error.log
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
+
+  通过Dockerfile创建一个镜像，替换成你自己的名字
+  $docker build -t nginx .
+
+  创建完成后，我们可以在本地的镜像列表里查找到刚刚创建的镜像
+  $docker images nginx
+
+```
+
+###  Docker的网络连接
+* 桥接
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/qiaojie.jpg)
+
+* ovs
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/ovs.jpg)
+
+* weave
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/weave.jpg)

@@ -340,21 +340,20 @@
 
 * 使用(通过Dockerfile构建nginx容器)
   
-```python
-  创建Dockerfile
-  首先，创建目录nginx,用于存放后面的相关东西
-  $mkdir -p ~/nginx/www ~/nginx/logs ~/nginx/conf
+  创建Dockerfile<br>
+  首先，创建目录nginx,用于存放后面的相关东西<br>
+  mkdir -p ~/nginx/www ~/nginx/logs ~/nginx/conf<br>
 
-  www目录将映射为nginx容器配置的虚拟目录
-  logs目录将映射为nginx容器的日志目录
-  conf目录里的配置文件将映射为nginx容器的配置文件
-  进入创建的nginx目录，创建Dockerfile
+  www目录将映射为nginx容器配置的虚拟目录<br>
+  logs目录将映射为nginx容器的日志目录<br>
+  conf目录里的配置文件将映射为nginx容器的配置文件<br>
+  进入创建的nginx目录，创建Dockerfile<br>
  
-  $vim Dockerfile
-
+  vim Dockerfile<br>
+```Dockerfile
 FROM debian:jessie
 
-MAINTAINER NGINX Docker Maintainers "docker-maint@nginx.com"
+MAINTAINER NGINX Docker Maintainers "docker@nginx.com"
 
 ENV NGINX_VERSION 1.10.1-1~jessie
 
@@ -372,7 +371,6 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
                                                 gettext-base \
         && rm -rf /var/lib/apt/lists/*
 
-# forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
         && ln -sf /dev/stderr /var/log/nginx/error.log
 
@@ -380,20 +378,21 @@ EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
 
-  通过Dockerfile创建一个镜像，替换成你自己的名字
-  $docker build -t nginx .
-
-  创建完成后，我们可以在本地的镜像列表里查找到刚刚创建的镜像
-  $docker images nginx
-
 ```
 
-###  Docker的网络连接
-* 桥接
+  通过Dockerfile创建一个镜像，替换成你自己的名字<br>
+  docker build -t nginx .<br>
+
+  创建完成后，我们可以在本地的镜像列表里查找到刚刚创建的镜像<br>
+  docker images nginx<br>
+
+
+### Docker的网络连接
+* 桥接<br>
   ![Image](https://github.com/honglongwei/docker/blob/master/images/qiaojie.jpg)
 
-* ovs
+* ovs<br>
   ![Image](https://github.com/honglongwei/docker/blob/master/images/ovs.jpg)
 
-* weave
+* weave<br>
   ![Image](https://github.com/honglongwei/docker/blob/master/images/weave.jpg)

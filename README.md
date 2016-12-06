@@ -388,8 +388,90 @@ CMD ["nginx", "-g", "daemon off;"]
 
 
 ### Docker的网络连接
+
 * 桥接<br>
-  ![Image](https://github.com/honglongwei/docker/blob/master/images/qiaojie.jpg)
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/qiaojie.jpg)<br>
+  
+  网桥方式需要安装网桥管理工具<br>
+  yum install bridge-utils<br>
+  brctl show //可以看到虚拟机的网络关系<br>
+  通过虚拟网桥桥接互通，所有网卡都要在一个网段下，所以要对每个Docker守护进程对ip的分配做出限制<br>
+  下面，我们就来实现这个结构：<br>
+```example
+我的两台Ubuntu 14.04 的虚拟机ip：
+
+Host1 ： 10.211.55.3  网卡：eth0
+
+Host2 ：10.211.55.5   网卡   eth1
+
+网关：10.211.55.1
+
+对容器ip的划分：
+
+Host1: 10.211.55.64/26
+
+　　地址范围： 10.211.55.65～10.211.55.126
+
+Host2: 10.211.55.128/26
+
+　　地址范围： 10.211.55.129～10.211.55.190
+
+需要的操作：
+
+以下，以Host1 为例，Host2 上操作相似，只是网卡名字不一样，我在这里，没有使用默认的docker0 网桥，而是新建了虚拟网桥
+
+1. 分别在Docker主机上建立虚拟网桥：
+
+　　 Host1: $ sudo brctl addbr br0
+
+　　 
+
+2. 为网桥分配一个同网段ip
+
+　　Host1: $ sudo ifconfig br0 10.211.55.10 netmask 255.255.255.0　　
+
+　　Host2: $ sudo ifconfig br0 10.211.55.20 netmask 255.255.255.0
+
+3. 桥接本地网卡：
+
+　　Host1: $ sudo brctl addif br0 eth0
+
+     
+
+这里，我们就准备好了网桥设置
+
+下面我们来修改Docker的配置,使用我们新建的网桥代替docker0:
+
+1. 修改 /etc/default/docker文件
+
+　　$sudo vim /etc/default/docker
+
+2. 添加守护进程的启动选项：
+
+　　Host1: DOCKER_OPTS=" -b=br0 --fixed-cidr=‘10.211.55.64/26‘ "  
+
+　　Host2: DOCKER_OPTS=" -b=br1 --fixed-cidr=‘10.211.55.128/26‘ "
+
+      这里，-b 用来指定容器连接的网桥名字
+
+　　　　　--fixed-cidr用来限定为容器分配的IP地址范围
+
+ 
+
+3. 保存文件并重启Docker服务
+
+　　$ sudo service docker restart
+
+ 
+
+下面，就可以来验证：
+
+1.分别在两个Host上启动一个容器
+
+　　$ docker run -it ubuntu /bin/bash
+
+ 2.在容器中运行ping命令查看连接情况 
+```
 
 * ovs<br>
   ![Image](https://github.com/honglongwei/docker/blob/master/images/ovs.jpg)

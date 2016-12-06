@@ -474,7 +474,29 @@ Host2: 10.211.55.128/26
 ```
 
 * ovs<br>
-  ![Image](https://github.com/honglongwei/docker/blob/master/images/ovs.jpg)
+  ![Image](https://github.com/honglongwei/docker/blob/master/images/ovs.jpg)<br>
+  
+  ovs: open vswitch是一个高质量的，多层虚拟交换机<br>
+  操作步骤:<br>
+   1.在虚拟机中建立ovs网桥<br>
+   2.添加gre连接<br>
+   3.配置docker容器虚拟网桥<br>
+   4.为虚拟网桥添加ovs接口<br>
+   5.添加不同Docker容器网段路由<br>
+```cmd
+ $ ovs-vsctl show  
+ $ ovs-vsctl add-br obr0  
+ $ ovs-vsctl add-port obr0 gre0  
+ $ ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.59.104  
+ $ ovs-vsctl show  
 
+ $ brctl addbr br0  
+ $ ifconfig br0 192.168.1.1 netmask 255.255.255.0  
+ $ brctl addif br0 obr0  
+ $ brctl show  
+
+  
+ $ ip route add 192.168.2.0/24 via 192.168.59.104 dev eth0 
+```
 * weave<br>
   ![Image](https://github.com/honglongwei/docker/blob/master/images/weave.jpg)
